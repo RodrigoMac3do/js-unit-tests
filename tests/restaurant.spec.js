@@ -1,5 +1,5 @@
 const createMenu = require('../src/restaurant');
- 
+
 /*
   Você é responsável por escrever o código do sistema de pedidos de um restaurante. Deve ser possível, através desse sistema, cadastrar um menu. Dado que um menu foi cadastrado, o sistema deve disponibilizar um objeto através do qual se consegue:
   - ler o menu cadastrado;
@@ -46,13 +46,12 @@ const createMenu = require('../src/restaurant');
 
 describe('10 - Implemente os casos de teste e a função `createMenu`', () => {
   it('Verifica se a função `createMenu` tem o comportamento esperado', () => {
-    fail('Teste vazio!');
     // TESTE 1: Verifique se o retorno da função createMenu() é um objeto que possui a
     // chave fetchMenu, a qual tem como valor uma função.
     // ```
     // const objetoRetornado = createMenu(); // Retorno: { fetchMenu: () => {}, ... }
     // ```
-    // TESTE 2: Verifique se 'objetoRetornado.fetchMenu()' retorna um objeto cujas chaves são somente `food` e `drink`, 
+    // TESTE 2: Verifique se 'objetoRetornado.fetchMenu()' retorna um objeto cujas chaves são somente `food` e `drink`,
     // considerando que a função createMenu() foi chamada com o objeto: `{ food: {}, drink: {} }`.
     // ```
     // const objetoRetornado = createMenu({ food: {}, drink: {} });
@@ -109,5 +108,78 @@ describe('10 - Implemente os casos de teste e a função `createMenu`', () => {
     // objetoRetornado.pay() // Retorno: somaDosPreçosDosPedidos
     // ```
     // Agora faça o PASSO 4 no arquivo `src/restaurant.js`.
+  });
+
+  it('Teste 1: Verifica se o retorno da função createMenu() é um objeto com a chave fetchMenu', () => {
+    const objetoRetornado = createMenu({});
+    expect(typeof objetoRetornado).toBe('object');
+    expect(objetoRetornado).toHaveProperty('fetchMenu');
+    expect(typeof objetoRetornado.fetchMenu).toBe('function');
+  });
+
+  it('Teste 2: Verifica se fetchMenu() retorna um objeto com chaves food e drink', () => {
+    const menu = { food: {}, drink: {} };
+    const objetoRetornado = createMenu(menu);
+    const fetchedMenu = objetoRetornado.fetchMenu();
+    expect(fetchedMenu).toHaveProperty('food');
+    expect(fetchedMenu).toHaveProperty('drink');
+  });
+
+  it('Teste 3: Verifica se fetchMenu() retorna o menu passado como parâmetro', () => {
+    const menu = {
+      food: { coxinha: 3.9, sopa: 9.9 },
+      drink: { agua: 3.9, cerveja: 6.9 },
+    };
+    const objetoRetornado = createMenu(menu);
+    const fetchedMenu = objetoRetornado.fetchMenu();
+    expect(fetchedMenu).toEqual(menu);
+  });
+
+  it('Teste 4: Verifica se consumption é um array vazio após a criação do menu', () => {
+    const objetoRetornado = createMenu({});
+    expect(Array.isArray(objetoRetornado.consumption)).toBe(true);
+    expect(objetoRetornado.consumption.length).toBe(0);
+  });
+
+  it('Teste 5: Verifica se order() adiciona a string ao array consumption', () => {
+    const objetoRetornado = createMenu({});
+    objetoRetornado.order('coxinha');
+    expect(objetoRetornado.consumption).toEqual(['coxinha']);
+  });
+
+  it('Teste 6: Verifica se order() adiciona múltiplas strings ao array consumption', () => {
+    const objetoRetornado = createMenu({});
+    objetoRetornado.order('coxinha');
+    objetoRetornado.order('agua');
+    objetoRetornado.order('sopa');
+    objetoRetornado.order('sashimi');
+    expect(objetoRetornado.consumption).toEqual([
+      'coxinha',
+      'agua',
+      'sopa',
+      'sashimi',
+    ]);
+  });
+
+  it('Teste 7: Verifica se order() aceita pedidos repetidos', () => {
+    const objetoRetornado = createMenu({});
+    objetoRetornado.order('coxinha');
+    objetoRetornado.order('agua');
+    objetoRetornado.order('coxinha');
+    expect(objetoRetornado.consumption).toEqual(['coxinha', 'agua', 'coxinha']);
+  });
+
+  it('Teste 8: Verifica se pay() retorna a soma dos preços dos pedidos com 10% de acréscimo', () => {
+    const menu = {
+      food: { coxinha: 3.9, sopa: 9.9, pizza: 12.5 },
+      drink: { agua: 3.9, cerveja: 6.9 },
+    };
+    const objetoRetornado = createMenu(menu);
+    objetoRetornado.order('coxinha');
+    objetoRetornado.order('agua');
+    objetoRetornado.order('pizza');
+    const total = 3.9 + 3.9 + 12.5;
+    const totalComAcrescimo = total * 1.1;
+    expect(objetoRetornado.pay()).toBe(totalComAcrescimo);
   });
 });
