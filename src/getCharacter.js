@@ -45,29 +45,27 @@ const characters = {
   brienne: {
     name: 'Brienne Tarth',
     class: 'Knight',
-    phrases: ['Im No Lady, Your Grace.', 'I, Brienne Of Tarth, Sentence You To Die.'],
+    phrases: [
+      'Im No Lady, Your Grace.',
+      'I, Brienne Of Tarth, Sentence You To Die.',
+    ],
   },
   melissandre: {
     name: 'Melissandre',
     class: 'Necromancer',
-    phrases: ['Death By Fire Is The Purest Death.', 'For The Night Is Dark And Full Of Terrors.'],
+    phrases: [
+      'Death By Fire Is The Purest Death.',
+      'For The Night Is Dark And Full Of Terrors.',
+    ],
   },
 };
 
 const getCharacter = (name) => {
-  if (name === undefined) {
-    return undefined;
-  }
+  if (name === undefined) return undefined;
 
   const lowered = name.toLowerCase();
 
-  if (characters[lowered]) {
-    return characters[lowered];
-  }
-
-  return undefined;
+  return characters[lowered] || undefined;
 };
-
-console.log(getCharacter('Arya'));
 
 module.exports = getCharacter;
