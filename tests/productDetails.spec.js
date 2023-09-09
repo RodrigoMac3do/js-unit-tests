@@ -31,7 +31,7 @@ describe('6 - Implemente os casos de teste para a função `productDetails`', ()
     // fail('Teste vazio!');
     // ESCREVA SEUS TESTES ABAIXO:
     // Teste se productDetails é uma função.
-    expect(typeof productDetails).toBe('function'); 
+    expect(typeof productDetails).toBe('function');
 
     // Teste se o retorno da função é um array.
     expect(Array.isArray(productDetails())).toBeTruthy();
@@ -40,13 +40,20 @@ describe('6 - Implemente os casos de teste para a função `productDetails`', ()
     expect(productDetails.length).toBe(2);
 
     // Teste se os dois itens dentro do array retornado pela função são objetos.
-    expect(typeof Object.entries(productDetails)).toBe('object')
+    expect(typeof Object.entries(productDetails)).toBe('object');
 
     // Teste se quando passado parâmetros diferentes entre si, os dois objetos também são diferentes entre si.
-    expect(Object.values(productDetails())[0] !== (Object.values(productDetails))[1]).toBeTruthy();
+    expect(
+      Object.values(productDetails())[0] !== Object.values(productDetails)[1]
+    ).toBeTruthy();
 
     // Teste se os dois productIds terminam com 123.
-    expect(Object.values(productDetails()[1].details.productId).includes('1', '2', '3')).toBe(true);
-
+    expect(
+      Object.values(productDetails()[1].details.productId).includes(
+        '1',
+        '2',
+        '3'
+      )
+    ).toBe(true);
   });
 });
