@@ -22,8 +22,9 @@
 const circle = (radius) => {
   if (radius <= 0 || typeof radius !== 'number') return undefined;
 
-  const area = Math.PI * radius * radius;
-  const circumference = 2 * Math.PI * radius;
+  const PI = Math.PI.toFixed(2);
+  const area = PI * radius * radius;
+  const circumference = 2 * PI * radius;
 
   return {
     radius,
