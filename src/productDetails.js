@@ -24,23 +24,20 @@
   ]
 */
 
-const productDetails = (firstProduct, secondProduct) => [
-  {
-    name: firstProduct,
-    details: {
-      productId: `${firstProduct}123`,
-    },
-  },
-  {
-    name: secondProduct,
-    details: {
-      productId: `${secondProduct}123`,
-    },
-  },
-];
+const productDetails = (firstProduct, secondProduct) => {
+  const products = [firstProduct, secondProduct];
+  const result = [];
 
-console.log(productDetails('Alcool gel', 'Máscara'));
-console.log(typeof Object.entries(productDetails));
-console.log((productDetails('Alcool gel', 'Máscara')[1].details.productId));
+  products.forEach((product) => {
+    result.push({
+      name: product,
+      details: {
+        productId: `${product}123`,
+      },
+    });
+  });
+
+  return result;
+};
 
 module.exports = productDetails;
